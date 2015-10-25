@@ -1,0 +1,25 @@
+{
+  "name": "jlaso/aws-s3-wrapper",
+  "description": "AWS S3 Wrapper",
+  "keywords": ["aws", "S3", "amazon"],
+  "homepage": "https://github.com/jlaso/aws-s3-wrapper",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Joseluis Laso",
+      "email": "jlaso@joseluislaso.es",
+      "homepage": "http://www.joseluislaso.es/",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.29",
+    "aws/aws-sdk-php": "2.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "JLaso\\S3Wrapper\\": "src/"
+    }
+  }
+}
