@@ -4,11 +4,20 @@ namespace JLaso\S3Wrapper;
 
 class S3Wrapper
 {
+    /** @var string  */
     protected $bucket;
+    /** @var \Aws\S3\S3Client */
     protected $s3Client = null;
+    /** @var string  */
     protected $lastRemoteFile = "";
+    /** @var S3Wrapper */
     protected static $instance = null;
 
+    /**
+     * @param string $accessKeyId
+     * @param string $secretAccessKey
+     * @param string $bucket
+     */
     function __construct($accessKeyId, $secretAccessKey, $bucket)
     {
         $this->bucket = $bucket;
@@ -23,7 +32,11 @@ class S3Wrapper
         self::$instance = $this;
     }
 
-    static public function getInstance()
+    /**
+     * @return S3Wrapper
+     * @throws \Exception
+     */
+    public static function getInstance()
     {
         if (!self::$instance) {
             if (!file_exists(__DIR__.'/config.ini')){
@@ -105,7 +118,7 @@ class S3Wrapper
     }
 
     /**
-     * @param string $file
+     * @param string $path
      * @return array
      */
     public function getFilesList($path = "")
@@ -141,11 +154,15 @@ class S3Wrapper
         return $buckets["Buckets"];
     }
 
+    /**
+     * @param string $localFile
+     * @param string $remoteFile
+     */
     public function deleteFile($localFile, $remoteFile)
     {
         @unlink($localFile);
 
-        return $this->s3Client->deleteObject(array(
+        $this->s3Client->deleteObject(array(
             'Bucket' => $this->bucket,
             'Key' => $remoteFile,
         ));
